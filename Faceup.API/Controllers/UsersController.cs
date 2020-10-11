@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Faceup.API.Data;
+using Faceup.API.DTOs;
 using Faceup.API.Entities;
+using Faceup.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Faceup.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
         public UsersController(DataContext context)
@@ -18,11 +19,13 @@ namespace Faceup.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
+        [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<AppUser>> GetUser(int userId)
         {
