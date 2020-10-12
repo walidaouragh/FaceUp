@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { IUser } from './_models/IUser';
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -7,24 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
-
-  users: any[];
+  constructor(private accountService: AccountService) {}
 
   title = 'Faceup-web';
   ngOnInit(): void {
-    this.getUsers();
+    this.setCurrentUser();
   }
 
-  getUsers(): void {
-    this.http.get('https://localhost:5001/api/users').subscribe(
-      (users: any[]) => {
-        this.users = users;
-        console.log(this.users);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  setCurrentUser(): void {
+    const user: IUser = JSON.parse(localStorage.getItem('user'));
+    this.accountService.setCurrentUser(user);
   }
 }
