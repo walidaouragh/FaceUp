@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,10 +10,12 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
   registerForm: FormGroup;
-  errorMessage: string;
   @Output() cancelRegister = new EventEmitter();
 
   ngOnInit(): void {
@@ -20,15 +23,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.registerForm);
     this.accountService.register(this.registerForm.value).subscribe(
       () => {
-        // success
+        this.toastr.success('Success!', 'You are in!');
         this.cancel();
       },
       (error: HttpErrorResponse) => {
-        this.errorMessage = error.error;
         console.log(error);
+        this.toastr.error('Error!', error.error);
       }
     );
   }
