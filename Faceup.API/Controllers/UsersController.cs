@@ -1,35 +1,47 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Faceup.API.Data;
-using Faceup.API.DTOs;
 using Faceup.API.Entities;
-using Faceup.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Faceup.API.Repositories;
+using Faceup.API.DTOs;
+using AutoMapper;
 
 namespace Faceup.API.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
-        public UsersController(DataContext context)
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userRepository.GetMembers();
+
+            return Ok(users);
         }
 
-        [Authorize]
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<AppUser>> GetUser(int userId)
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<MemberDto>> GetUserById(int userId)
         {
-            return await _context.Users.FindAsync(userId);
+            var user = await _userRepository.GetUserById(userId);
+
+            return Ok(_mapper.Map<MemberDto>(user));
+        }
+
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>> GetUserByName(string username)
+        {
+            var user = await _userRepository.GetMember(username);
+
+            return Ok(user);
         }
     }
 }

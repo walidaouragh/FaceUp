@@ -9,8 +9,10 @@ namespace Faceup.API.Data
     
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.ToTable("Users");
             builder.HasKey(k => k.UserId);
+            builder.HasMany(d => d.Photos)
+                .WithOne(p => p.AppUser)
+                .HasForeignKey(d => d.PhotoId);
         }
     }
 }

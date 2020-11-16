@@ -1,4 +1,5 @@
 using System;
+using Faceup.API.Data.EntityConfigurations;
 using Faceup.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,8 @@ namespace Faceup.API.Data
             }
 
             builder.ApplyConfiguration(new AppUserConfigurations());
+            builder.ApplyConfiguration(new PhotosConfigurations());
+
             base.OnModelCreating(builder);
          }
     }
