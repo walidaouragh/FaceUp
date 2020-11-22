@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Faceup.API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Faceup.API.Repositories;
 using Faceup.API.DTOs;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace Faceup.API.Controllers
 {
@@ -42,6 +42,19 @@ namespace Faceup.API.Controllers
             var user = await _userRepository.GetMember(username);
 
             return Ok(user);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsername(username);
+
+            _mapper.Map(memberUpdateDto, user);
+
+            await _userRepository.UpdateUser(user);
+
+            return Ok();
         }
     }
 }

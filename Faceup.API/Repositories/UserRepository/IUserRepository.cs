@@ -14,5 +14,6 @@ namespace Faceup.API.Repositories
         Task<bool> SaveAll();
         Task<IEnumerable<MemberDto>> GetMembers();
         Task<MemberDto> GetMember(string username);
+        Task UpdateUser(AppUser user);
     }
 }

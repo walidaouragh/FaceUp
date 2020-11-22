@@ -59,5 +59,11 @@ namespace Faceup.API.Repositories
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
+
+        public async Task UpdateUser(AppUser user)
+        {
+             _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }
