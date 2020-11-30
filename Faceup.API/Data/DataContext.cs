@@ -13,6 +13,8 @@ namespace Faceup.API.Data
 
         public DbSet<AppUser> Users { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
          protected override void OnModelCreating(ModelBuilder builder){
              
             if (builder == null)

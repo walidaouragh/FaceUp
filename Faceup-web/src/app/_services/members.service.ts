@@ -15,9 +15,9 @@ export class MembersService {
   members: IMember[] = [];
 
   getMembers(): Observable<IMember[]> {
-    if (this.members.length > 0) {
+    /*  if (this.members.length > 0) {
       return of(this.members);
-    }
+    } */
     return this.http.get<IMember[]>(this.baseUrl + 'users').pipe(
       map((members: IMember[]) => {
         this.members = members;
@@ -37,5 +37,16 @@ export class MembersService {
 
   updateMember(member: IMember): Observable<void> {
     return this.http.put<void>(this.baseUrl + 'users', member);
+  }
+
+  deletePhoto(photoId: number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl + `users/photo/${photoId}`);
+  }
+
+  setMainPhoto(photoId: number): Observable<any> {
+    return this.http.put<any>(
+      this.baseUrl + `users/set-main-photo/${photoId}`,
+      {}
+    );
   }
 }

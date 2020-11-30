@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Faceup.API.Repositories;
 using AutoMapper;
 using Faceup.API.Helpers;
+using Faceup.API.Services.PhotoService;
+using Faceup.API.Repositories.PhotoRepository;
 
 namespace Faceup.API.Extentions
 {
@@ -14,11 +16,17 @@ namespace Faceup.API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddScoped<IPhotoService, PhotoService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
