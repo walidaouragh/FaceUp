@@ -17,6 +17,8 @@ namespace Faceup.API.Helpers
 
             CreateMap<MemberUpdateDto, AppUser>()
                 .ForMember(dest => dest.Introduction, opt => opt.MapFrom(src => src.Description));
+
+            CreateMap<RegisterDto, AppUser>();
         }
     }
 }
