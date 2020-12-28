@@ -28,6 +28,8 @@ namespace Faceup.API.Extentions
 
             services.AddScoped<IPhotoRepository, PhotoRepository>();
 
+            services.AddScoped<LogUserActivity>();
+
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             return services;

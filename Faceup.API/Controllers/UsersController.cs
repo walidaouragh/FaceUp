@@ -10,6 +10,7 @@ using Faceup.API.Extentions;
 using Faceup.API.Services.PhotoService;
 using Faceup.API.Entities;
 using Faceup.API.Repositories.PhotoRepository;
+using Faceup.API.Helpers;
 
 namespace Faceup.API.Controllers
 {
@@ -33,9 +34,19 @@ namespace Faceup.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _userRepository.GetMembers();
+            var user = await _userRepository.GetUserByUsername(User.GetUserName());
+            userParams.CurrentUsername = user.UserName;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+            
+            var users = await _userRepository.GetMembers(userParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
         }

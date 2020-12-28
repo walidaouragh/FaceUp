@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Faceup.API.DTOs;
 using Faceup.API.Entities;
+using Faceup.API.Helpers;
 
 namespace Faceup.API.Repositories
 {
@@ -12,7 +13,7 @@ namespace Faceup.API.Repositories
         Task<AppUser> GetUserByUsername(string username);
         void Update(AppUser user);
         Task<bool> SaveAll();
-        Task<IEnumerable<MemberDto>> GetMembers();
+        Task<PagedList<MemberDto>> GetMembers(UserParams userParams);
         Task<MemberDto> GetMember(string username);
         Task UpdateUser(AppUser user);
     }
