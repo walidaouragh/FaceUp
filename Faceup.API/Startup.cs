@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Faceup.API
 {
@@ -26,6 +25,7 @@ namespace Faceup.API
            
             services.AddCors();
 
+            services.AddSwaggerDocumentations();
             services.AddIdentityServices(_configuration);
         }
 
@@ -46,6 +46,8 @@ namespace Faceup.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwaggerDocumentations();
         }
     }
 }
