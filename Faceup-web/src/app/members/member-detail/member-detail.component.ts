@@ -5,6 +5,7 @@ import {
   NgxGalleryImage,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+import { ToastrService } from 'ngx-toastr';
 import { IMember } from 'src/app/_models/IMember';
 import { MembersService } from 'src/app/_services/members.service';
 
@@ -16,7 +17,8 @@ import { MembersService } from 'src/app/_services/members.service';
 export class MemberDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private membersService: MembersService
+    private membersService: MembersService,
+    private toaster: ToastrService
   ) {}
 
   member: IMember;
@@ -55,5 +57,11 @@ export class MemberDetailComponent implements OnInit {
       });
     });
     return imageUrls;
+  }
+
+  onLike(member: IMember): void {
+    this.membersService.addLike(member.userName).subscribe(() => {
+      this.toaster.success('You have liked' + member.knownAs);
+    });
   }
 }

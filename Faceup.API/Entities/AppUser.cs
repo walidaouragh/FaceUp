@@ -22,9 +22,8 @@ namespace Faceup.API.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public ICollection<Photo> Photos { get; set; }
-       /*  public int GetAge()
-        {
-            return Faceup.API.Extentions.DateTimeExtensions.CalculateAge(DateOfBirth);
-        } */
+        public ICollection<UserLike> Likers { get; set; }
+        public ICollection<UserLike> Likees { get; set; }
+
     }
 }

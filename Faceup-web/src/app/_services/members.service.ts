@@ -98,6 +98,20 @@ export class MembersService {
     );
   }
 
+  addLike(username: string): any {
+    return this.http.post(this.baseUrl + `likes/${username}`, {});
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number): any {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+
+    return this.getPaginatedResult<Partial<IMember[]>>(
+      this.baseUrl + 'likes',
+      params
+    );
+  }
+
   private getPaginatedResult<T>(url, params): any {
     const paginatedResult: IPaginationResult<T> = new IPaginationResult<T>();
     return this.http

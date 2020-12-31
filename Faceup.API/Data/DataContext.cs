@@ -15,17 +15,20 @@ namespace Faceup.API.Data
 
         public DbSet<Photo> Photos { get; set; }
 
-         protected override void OnModelCreating(ModelBuilder builder){
-             
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+        public DbSet<UserLike> Likes { get; set; }
 
-            builder.ApplyConfiguration(new AppUserConfigurations());
-            builder.ApplyConfiguration(new PhotosConfigurations());
+        protected override void OnModelCreating(ModelBuilder builder){
+            
+        if (builder == null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
 
-            base.OnModelCreating(builder);
-         }
+        builder.ApplyConfiguration(new AppUserConfigurations());
+        builder.ApplyConfiguration(new PhotosConfigurations());
+        builder.ApplyConfiguration(new UserLikeConfigurations());
+
+        base.OnModelCreating(builder);
+        }
     }
 }
