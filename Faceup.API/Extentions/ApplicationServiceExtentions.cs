@@ -10,6 +10,7 @@ using Faceup.API.Helpers;
 using Faceup.API.Services.PhotoService;
 using Faceup.API.Repositories.PhotoRepository;
 using Faceup.API.Repositories.LikeRepository;
+using Faceup.API.Repositories.MessageRepository;
 
 namespace Faceup.API.Extentions
 {
@@ -30,6 +31,8 @@ namespace Faceup.API.Extentions
             services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             services.AddScoped<ILikesRepository, LikesRepository>();
+            
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             services.AddScoped<LogUserActivity>();
 
