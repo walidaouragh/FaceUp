@@ -12,7 +12,7 @@ namespace Faceup.API.Data.EntityConfigurations
 
             builder.HasOne(d => d.AppUser)
                 .WithMany(p => p.Photos)
-                .HasForeignKey(d => d.UserId)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

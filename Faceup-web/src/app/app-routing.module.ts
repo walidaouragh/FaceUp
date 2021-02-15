@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { ServerErrorComponent } from './error/server-error/server-error.component';
 import { TestErrorComponent } from './error/test-error/test-error.component';
@@ -9,6 +10,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth-guard.service';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
@@ -32,6 +34,11 @@ const routes: Routes = [
         path: 'member/edit',
         component: MemberEditComponent,
         canDeactivate: [PreventUnsavedChangesGuard],
+      },
+      {
+        path: 'admin',
+        component: AdminDashboardComponent,
+        canActivate: [AdminGuard],
       },
     ],
   },

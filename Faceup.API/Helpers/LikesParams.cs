@@ -2,7 +2,7 @@ namespace Faceup.API.Helpers
 {
     public class LikesParams : PaginationParams
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string Predicate { get; set; }
     }
 }

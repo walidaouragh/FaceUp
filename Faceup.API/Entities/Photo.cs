@@ -10,6 +10,6 @@ namespace Faceup.API.Entities
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
         public AppUser AppUser { get; set; }
-        public int UserId { get; set; }
+        public int Id { get; set; }
     }
 }

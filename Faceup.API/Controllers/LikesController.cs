@@ -39,7 +39,7 @@ namespace Faceup.API.Controllers
                 return BadRequest("You cannot like yourself");
             }
 
-            var userLike = await _likesRepository.GetUserLike(likerId, likee.UserId);
+            var userLike = await _likesRepository.GetUserLike(likerId, likee.Id);
             if (userLike != null)
             {
                 return BadRequest("You already like this user");
@@ -48,7 +48,7 @@ namespace Faceup.API.Controllers
             userLike = new UserLike()
             {
                 LikerId = likerId,
-                LikeeId = likee.UserId,
+                LikeeId = likee.Id,
             };
 
             liker.Likees.Add(userLike);
@@ -64,7 +64,7 @@ namespace Faceup.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
         {
-            likesParams.UserId = User.GetUserId();
+            likesParams.Id = User.GetUserId();
             var users = await _likesRepository.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);

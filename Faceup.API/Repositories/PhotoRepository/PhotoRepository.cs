@@ -34,7 +34,7 @@ namespace Faceup.API.Repositories.PhotoRepository
 
         public async Task UpdatePhoto(int userId, Photo photo)
         {
-            var currentMainPhoto = await _context.Photos.FirstOrDefaultAsync(p => p.IsMain && p.UserId == userId);
+            var currentMainPhoto = await _context.Photos.FirstOrDefaultAsync(p => p.IsMain && p.Id == userId);
             if (currentMainPhoto !=null)
             {
                 currentMainPhoto.IsMain = false;
@@ -43,7 +43,7 @@ namespace Faceup.API.Repositories.PhotoRepository
 
             photo.IsMain = true;
             _context.Photos.Update(photo);
-            
+
             await _context.SaveChangesAsync();
         }
     }

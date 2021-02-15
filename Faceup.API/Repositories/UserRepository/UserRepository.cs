@@ -24,7 +24,7 @@ namespace Faceup.API.Repositories
 
         public async Task<AppUser> GetUserById(int userId)
         {
-            return await _context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.UserId == userId);
+            return await _context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.Id == userId);
         }
 
         public async Task<AppUser> GetUserByUsername(string username)

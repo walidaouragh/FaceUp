@@ -29,19 +29,19 @@ namespace Faceup.API.Repositories.LikeRepository
 
             if (likesParams.Predicate == "liked")
             {
-                likes = likes.Where(x => x.LikerId == likesParams.UserId);
+                likes = likes.Where(x => x.LikerId == likesParams.Id);
                 users = likes.Select(x => x.Likee);
             }
 
             if (likesParams.Predicate == "likedBy")
             {
-                likes = likes.Where(x => x.LikeeId == likesParams.UserId);
+                likes = likes.Where(x => x.LikeeId == likesParams.Id);
                 users = likes.Select(x => x.Liker);
             }
 
             var likedUsers = users.Select(user => new LikeDto()
             {
-                UserId = user.UserId,
+                Id = user.Id,
                 UserName = user.UserName,
                 Age = user.DateOfBirth.CalculateAge(),
                 KnownAs = user.KnownAs,
@@ -54,7 +54,7 @@ namespace Faceup.API.Repositories.LikeRepository
 
         public async Task<AppUser> GetUserWithLikes(int userId)
         {
-            return await _context.Users.Include(x => x.Likees).FirstOrDefaultAsync(x => x.UserId == userId);
+            return await _context.Users.Include(x => x.Likees).FirstOrDefaultAsync(x => x.Id == userId);
         }
     }
 }

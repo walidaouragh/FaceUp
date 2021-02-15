@@ -153,7 +153,7 @@ namespace Faceup.API.Controllers
             }
 
 
-            await _photoRepository.UpdatePhoto(user.UserId, photo);
+            await _photoRepository.UpdatePhoto(user.Id, photo);
 
             return NoContent();
         }
