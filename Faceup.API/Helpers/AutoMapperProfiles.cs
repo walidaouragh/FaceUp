@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AutoMapper;
 using Faceup.API.DTOs;
@@ -23,6 +24,9 @@ namespace Faceup.API.Helpers
             CreateMap<Message, MessageDto>()
                 .ForMember(dest => dest.SenderPhotUrl, opt => opt.MapFrom(src => src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.RecipientPhotUrl, opt => opt.MapFrom(src => src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            // To return UTC time to the client with Z
+            CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
     }
 }

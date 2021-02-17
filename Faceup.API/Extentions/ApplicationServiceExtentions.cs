@@ -11,6 +11,7 @@ using Faceup.API.Services.PhotoService;
 using Faceup.API.Repositories.PhotoRepository;
 using Faceup.API.Repositories.LikeRepository;
 using Faceup.API.Repositories.MessageRepository;
+using Faceup.API.SignalR;
 
 namespace Faceup.API.Extentions
 {
@@ -18,6 +19,8 @@ namespace Faceup.API.Extentions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddSingleton<PresenceTracker>();
+
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));

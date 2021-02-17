@@ -25,7 +25,7 @@ namespace Faceup.API.Helpers
 
             var user = await repo.GetUserById(userId);
 
-            user.LastActive = DateTime.Now;
+            user.LastActive = DateTime.UtcNow;
 
             await repo.SaveAll();
         }

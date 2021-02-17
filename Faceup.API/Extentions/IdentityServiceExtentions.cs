@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Tasks;
 using Faceup.API.Data;
 using Faceup.API.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,6 +33,24 @@ namespace Faceup.API.Extentions
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
                             ValidateIssuer = false,
                             ValidateAudience = false,
+                        };
+
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnMessageReceived = context =>
+                            {
+                                var accessToken = context.Request.Query["access_token"];
+
+                                var path = context.Request.HttpContext.Request.Path;
+
+                                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                                {
+                                    context.Token = accessToken;
+                                }
+
+                                return Task.CompletedTask;
+
+                            }
                         };
                     });
 

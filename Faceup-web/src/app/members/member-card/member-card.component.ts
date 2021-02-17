@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IMember } from 'src/app/_models/IMember';
 import { IUser } from 'src/app/_models/IUser';
 import { MembersService } from 'src/app/_services/members.service';
+import { PresenceService } from 'src/app/_services/presence.service';
 
 @Component({
   selector: 'app-member-card',
@@ -12,7 +13,8 @@ import { MembersService } from 'src/app/_services/members.service';
 export class MemberCardComponent implements OnInit {
   constructor(
     private memberService: MembersService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    public presenceService: PresenceService
   ) {}
 
   @Input() member: IMember;
